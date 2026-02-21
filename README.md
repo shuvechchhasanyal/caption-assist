@@ -1,4 +1,4 @@
-# Executive Post Assistant 🚀
+# Caption Assist 🚀
 
 A full-stack AI application designed to help people generate, review, and refine high-quality social media captions in seconds. 
 
