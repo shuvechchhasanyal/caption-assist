@@ -15,14 +15,19 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 # ---------------------------------------------------------
 # Helper Function
 # ---------------------------------------------------------
+# ---------------------------------------------------------
+# Helper Function
+# ---------------------------------------------------------
 def format_captions_for_frontend(captions_data):
     """
-    Extracts only the raw caption text from the dictionary 
-    so the JavaScript frontend can render it easily without platform labels.
+    Sends a list of dictionaries to the frontend so the JS can 
+    put the platform name above the box, and the text inside it.
     """
     if isinstance(captions_data, dict):
-        # Returns only the caption text, omitting the platform keys
-        return list(captions_data.values())
+        formatted = []
+        for platform, text in captions_data.items():
+            formatted.append({"platform": platform, "text": text})
+        return formatted
     return captions_data if captions_data else []
 
 # ---------------------------------------------------------

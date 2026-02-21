@@ -143,34 +143,53 @@ function renderCaptions() {
     container.innerHTML = '';
     selectedCaptionIndex = null;
 
-    generatedOptions.forEach((text, index) => {
+    // Map platforms to their FontAwesome icons
+    const iconMap = {
+        "LinkedIn": '<i class="fa-brands fa-linkedin"></i>',
+        "Instagram": '<i class="fa-brands fa-instagram"></i>',
+        "WhatsApp": '<i class="fa-brands fa-whatsapp"></i>'
+    };
+
+    generatedOptions.forEach((item, index) => {
+        // 1. Create a wrapper for the whole section
+        const wrapper = document.createElement('div');
+        wrapper.className = 'caption-wrapper';
+
+        // 2. Create the label that sits ABOVE the card
+        const label = document.createElement('div');
+        label.className = 'platform-label';
+        const iconHtml = iconMap[item.platform] || '<i class="fa-solid fa-pen"></i>';
+        label.innerHTML = `${iconHtml} ${item.platform}`;
+
+        // 3. Create the actual card box
         const div = document.createElement('div');
         div.className = 'caption-card';
         
-        // 1. Create a container for the actual text
+        // 4. Create the Text Content
         const textSpan = document.createElement('div');
         textSpan.className = 'caption-text-content';
-        textSpan.innerText = cleanCaptionText(text);
+        textSpan.innerText = cleanCaptionText(item.text); 
         
-        // 2. Create the inline copy button
+        // 5. Create the inline copy button
         const copyBtn = document.createElement('button');
         copyBtn.className = 'icon-copy-btn';
         copyBtn.innerText = 'Copy';
         
-        // When the copy button is clicked, copy the text and prevent selecting the card
         copyBtn.onclick = (e) => {
-            e.stopPropagation(); // Stops the card from being highlighted
+            e.stopPropagation(); 
             copySpecificText(textSpan.innerText, copyBtn);
         };
         
-        // Put the text and the button inside the card
+        // Assemble everything
         div.appendChild(textSpan);
         div.appendChild(copyBtn);
         
-        // Clicking the card itself still selects it for refinement
         div.onclick = () => selectCaption(index, div);
         
-        container.appendChild(div);
+        wrapper.appendChild(label);
+        wrapper.appendChild(div);
+        
+        container.appendChild(wrapper);
     });
 }
 
@@ -197,11 +216,14 @@ function copySpecificText(textToCopy, btnElement) {
     });
 }
 
-// --- Actions: Review / Retry / Stop (API CALLS) ---
 async function sendReview(feedbackAction, customFeedback = "") {
     if (!currentThreadId) return;
 
-    let baseCaption = selectedCaptionIndex !== null ? generatedOptions[selectedCaptionIndex] : "";
+    // Extract ONLY the text to send back to the AI for refinement
+    let baseCaption = "";
+    if (selectedCaptionIndex !== null) {
+        baseCaption = generatedOptions[selectedCaptionIndex].text; 
+    }
     
     try {
         const response = await fetch('/api/review', {
