@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Post Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="step-upload" class="step active">
+        <h2>Caption Assist</h2>
+        <p class="subtitle">Generate polished, on-brand network updates in seconds.</p>
+        
+        <div class="upload-area" id="dropzone">
+            <p id="upload-text">Drag & drop or click to upload photo</p>
+            <input type="file" id="file-input" accept=".jpg, .jpeg, .png" style="display: none;">
+            <img id="image-preview" src="" alt="Preview">
+        </div>
+
+        <label for="description">Context (Optional but recommended)</label>
+        <textarea id="description" placeholder="e.g., Speaking on the AI innovation panel at the Q3 Tech Summit in London today."></textarea>
+
+        <button class="btn-primary" style="width: 100%;" onclick="startDrafting()">Draft Options</button>
+        <div class="loading" id="loading-draft">Analyzing image context & drafting professional copy...</div>
+    </div>
+
+    <div id="step-review" class="step">
+        <h2>Review Drafts</h2>
+        <p class="subtitle">Select a direction to proceed, or add notes for revision.</p>
+
+        <div id="caption-list">
+            </div>
+
+        <label for="feedback">Revision Notes (Optional)</label>
+        <input type="text" id="feedback" placeholder="e.g., Make it sound more authoritative, remove hashtags...">
+
+        <div class="loading" id="loading-refine">Applying revisions...</div>
+
+        <div class="btn-group">
+            <button class="btn-primary" onclick="submitFeedback()">Approve & Finalize</button>
+            <button class="btn-secondary" onclick="retryDrafting()">Generate New</button>
+            <button class="btn-danger" onclick="stopProcess()">Discard</button>
+        </div>
+    </div>
+
+    <div id="step-result" class="step">
+        <h2>Ready to Post</h2>
+        <p class="subtitle">1-click copy to your clipboard.</p>
+        
+        <div class="caption-card selected" id="final-caption-text" style="cursor: text; user-select: all;">
+            </div>
+        
+        <div class="btn-group" style="flex-direction: column;">
+            <button class="btn-primary" onclick="copyToClipboard()">Copy to Clipboard</button>
+            <button class="btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="resetApp()">Start Over</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>
