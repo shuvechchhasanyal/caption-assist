@@ -10,8 +10,7 @@ Built with **LangGraph** for a "Human-in-the-Loop" workflow and powered by **Gro
 * **Human-in-the-Loop Pipeline:** Built with LangGraph, the app pauses after drafting to allow the user to select their favorite option and provide specific revision instructions.
 * **Iterative Refinement:** A secondary LLM agent applies your feedback to polish the chosen draft perfectly.
 * **Premium User Interface:** Features a modern, responsive "Aurora Glassmorphism" dark theme with drag-and-drop file support.
-* **Frictionless Workflow:** 1-click "Copy to Clipboard" functionality explicitly designed for executives and busy professionals.
-
+* **Frictionless Workflow:** 1-click "Copy to Clipboard" functionality explicitly designed for easy use.
 ## 🛠️ Tech Stack
 
 * **Backend:** Python, Flask
